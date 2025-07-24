@@ -1,0 +1,830 @@
+[
+    {
+        "id": "8ee3441aaee226d7",
+        "type": "tab",
+        "label": "N2 heating control",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "81249cbda575c87d",
+        "type": "mqtt in",
+        "z": "8ee3441aaee226d7",
+        "name": "",
+        "topic": "gas_heater_controller_out",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "403ce56dee80157d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 360,
+        "wires": [
+            [
+                "5ba080b2f30de83b",
+                "7e9d303949b5eb06",
+                "c4862aa0d16c3272",
+                "1fa217e7f3fee61a",
+                "df90e77a68660cdc",
+                "307cbe62bf1b21f3"
+            ]
+        ]
+    },
+    {
+        "id": "11b39c33c863a430",
+        "type": "ui_switch",
+        "z": "8ee3441aaee226d7",
+        "name": "",
+        "label": "N2 heating",
+        "tooltip": "",
+        "group": "ea8638b4c00b17c5",
+        "order": 1,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "N2_heater_run",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 2350,
+        "y": 280,
+        "wires": [
+            [
+                "2bde9e4efe6f75a0"
+            ]
+        ]
+    },
+    {
+        "id": "c536338b60a73ddf",
+        "type": "comment",
+        "z": "8ee3441aaee226d7",
+        "name": "N2 Heating Control",
+        "info": "",
+        "x": 270,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "f07cfe9061760576",
+        "type": "ui_text_input",
+        "z": "8ee3441aaee226d7",
+        "name": "",
+        "label": "N2 Setpoint:",
+        "tooltip": "",
+        "group": "ea8638b4c00b17c5",
+        "order": 3,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "mode": "number",
+        "delay": "0",
+        "topic": "N2_temp_set",
+        "sendOnBlur": false,
+        "className": "",
+        "topicType": "str",
+        "x": 2350,
+        "y": 460,
+        "wires": [
+            [
+                "2bde9e4efe6f75a0"
+            ]
+        ]
+    },
+    {
+        "id": "fdbb85f6f5aa8954",
+        "type": "inject",
+        "z": "8ee3441aaee226d7",
+        "name": "Initiate Setpoint",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "20",
+        "payloadType": "num",
+        "x": 2190,
+        "y": 520,
+        "wires": [
+            [
+                "f07cfe9061760576"
+            ]
+        ]
+    },
+    {
+        "id": "149ccebc4f88d884",
+        "type": "inject",
+        "z": "8ee3441aaee226d7",
+        "name": "Initiate",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 2130,
+        "y": 240,
+        "wires": [
+            [
+                "11b39c33c863a430",
+                "ce7d66028badeb51"
+            ]
+        ]
+    },
+    {
+        "id": "2dcdf662c689fbc0",
+        "type": "mqtt in",
+        "z": "8ee3441aaee226d7",
+        "name": "",
+        "topic": "gas_heater_controller_in",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "403ce56dee80157d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1910,
+        "y": 460,
+        "wires": [
+            [
+                "39cf1ed1c508fd42"
+            ]
+        ]
+    },
+    {
+        "id": "6c147d317c28b857",
+        "type": "template",
+        "z": "8ee3441aaee226d7",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\"{{payload.topic}}\":{{payload.payload}}}",
+        "output": "str",
+        "x": 2670,
+        "y": 320,
+        "wires": [
+            [
+                "731947ceed13895b"
+            ]
+        ]
+    },
+    {
+        "id": "2bde9e4efe6f75a0",
+        "type": "join",
+        "z": "8ee3441aaee226d7",
+        "name": "",
+        "mode": "custom",
+        "build": "merged",
+        "property": "",
+        "propertyType": "full",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "1",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 2510,
+        "y": 320,
+        "wires": [
+            [
+                "6c147d317c28b857"
+            ]
+        ]
+    },
+    {
+        "id": "731947ceed13895b",
+        "type": "mqtt out",
+        "z": "8ee3441aaee226d7",
+        "name": "",
+        "topic": "gas_heater_controller_in",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "403ce56dee80157d",
+        "x": 2930,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "5ba080b2f30de83b",
+        "type": "change",
+        "z": "8ee3441aaee226d7",
+        "name": "get N2_heater_run",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.N2_heater_run",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 280,
+        "wires": [
+            [
+                "81fe214673854e54"
+            ]
+        ]
+    },
+    {
+        "id": "7e9d303949b5eb06",
+        "type": "change",
+        "z": "8ee3441aaee226d7",
+        "name": "get N2_temp_act",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.N2_temp_act",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 510,
+        "y": 420,
+        "wires": [
+            [
+                "06dd5f5f48e86a59"
+            ]
+        ]
+    },
+    {
+        "id": "03a30116e9d3e46d",
+        "type": "ui_text",
+        "z": "8ee3441aaee226d7",
+        "group": "ea8638b4c00b17c5",
+        "order": 4,
+        "width": 3,
+        "height": 1,
+        "name": "",
+        "label": "Temperature: ",
+        "format": "{{msg.payload}}°C",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1570,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "4439f4119f0a8b24",
+        "type": "function",
+        "z": "8ee3441aaee226d7",
+        "name": "round, two decimals",
+        "func": "msg.payload = msg.payload.toFixed(2); \nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1390,
+        "y": 420,
+        "wires": [
+            [
+                "03a30116e9d3e46d"
+            ]
+        ]
+    },
+    {
+        "id": "c4862aa0d16c3272",
+        "type": "change",
+        "z": "8ee3441aaee226d7",
+        "name": "get N2_heater_power",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.N2_heater_power",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 480,
+        "wires": [
+            [
+                "e5b0ba9a863a8a61"
+            ]
+        ]
+    },
+    {
+        "id": "16b0629d7edf1c52",
+        "type": "ui_text",
+        "z": "8ee3441aaee226d7",
+        "group": "ea8638b4c00b17c5",
+        "order": 2,
+        "width": 3,
+        "height": 1,
+        "name": "",
+        "label": "Rel. Power: ",
+        "format": "{{msg.payload}}%",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1110,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "e5b0ba9a863a8a61",
+        "type": "function",
+        "z": "8ee3441aaee226d7",
+        "name": "scale 0..1 0..100",
+        "func": "msg.payload = msg.payload * 100; \nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 480,
+        "wires": [
+            [
+                "83ce5c8aaf2c4f13"
+            ]
+        ]
+    },
+    {
+        "id": "b626929fefed40a1",
+        "type": "delay",
+        "z": "8ee3441aaee226d7",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "2",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1150,
+        "y": 420,
+        "wires": [
+            [
+                "4439f4119f0a8b24"
+            ]
+        ]
+    },
+    {
+        "id": "905c9d91bc9c6f9d",
+        "type": "moving-average",
+        "z": "8ee3441aaee226d7",
+        "name": "Moving average 10 samples",
+        "amount": "10",
+        "weight": "cumulative",
+        "x": 990,
+        "y": 420,
+        "wires": [
+            [
+                "b626929fefed40a1"
+            ]
+        ]
+    },
+    {
+        "id": "06dd5f5f48e86a59",
+        "type": "trigger",
+        "z": "8ee3441aaee226d7",
+        "name": "resend evert 100ms",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "-100",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 730,
+        "y": 420,
+        "wires": [
+            [
+                "905c9d91bc9c6f9d"
+            ]
+        ]
+    },
+    {
+        "id": "2ba49ce808022326",
+        "type": "comment",
+        "z": "8ee3441aaee226d7",
+        "name": "moving average over 1s",
+        "info": "",
+        "x": 850,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "1fa217e7f3fee61a",
+        "type": "change",
+        "z": "8ee3441aaee226d7",
+        "name": "get ambient_temp_act",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.ambient_temp_act",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 540,
+        "wires": [
+            [
+                "ade204fa449854c9"
+            ]
+        ]
+    },
+    {
+        "id": "df90e77a68660cdc",
+        "type": "change",
+        "z": "8ee3441aaee226d7",
+        "name": "get ambient_humidity_act",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.ambient_humidity_act",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 550,
+        "y": 600,
+        "wires": [
+            [
+                "e6ec394918decbcd"
+            ]
+        ]
+    },
+    {
+        "id": "5470bdbf36b989bb",
+        "type": "ui_text",
+        "z": "8ee3441aaee226d7",
+        "group": "ea8638b4c00b17c5",
+        "order": 6,
+        "width": 3,
+        "height": 1,
+        "name": "",
+        "label": "Ambient Temperature:",
+        "format": "{{msg.payload}}°C",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 970,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "ade204fa449854c9",
+        "type": "function",
+        "z": "8ee3441aaee226d7",
+        "name": "round, two decimals",
+        "func": "msg.payload = msg.payload.toFixed(2); \nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 540,
+        "wires": [
+            [
+                "5470bdbf36b989bb"
+            ]
+        ]
+    },
+    {
+        "id": "4bd4c1fcca7d6dd6",
+        "type": "ui_text",
+        "z": "8ee3441aaee226d7",
+        "group": "ea8638b4c00b17c5",
+        "order": 7,
+        "width": 3,
+        "height": 1,
+        "name": "",
+        "label": "Ambient Humidity:",
+        "format": "{{msg.payload}}%",
+        "layout": "row-left",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 970,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "e6ec394918decbcd",
+        "type": "function",
+        "z": "8ee3441aaee226d7",
+        "name": "round, two decimals",
+        "func": "msg.payload = msg.payload.toFixed(2); \nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 600,
+        "wires": [
+            [
+                "4bd4c1fcca7d6dd6"
+            ]
+        ]
+    },
+    {
+        "id": "83ce5c8aaf2c4f13",
+        "type": "function",
+        "z": "8ee3441aaee226d7",
+        "name": "round, two decimals",
+        "func": "msg.payload = msg.payload.toFixed(2); \nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 480,
+        "wires": [
+            [
+                "16b0629d7edf1c52"
+            ]
+        ]
+    },
+    {
+        "id": "81fe214673854e54",
+        "type": "rbe",
+        "z": "8ee3441aaee226d7",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload",
+        "topi": "topic",
+        "x": 710,
+        "y": 280,
+        "wires": [
+            [
+                "11b39c33c863a430"
+            ]
+        ]
+    },
+    {
+        "id": "39cf1ed1c508fd42",
+        "type": "change",
+        "z": "8ee3441aaee226d7",
+        "name": "get N2_temp_set",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.N2_temp_set",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2150,
+        "y": 460,
+        "wires": [
+            [
+                "f07cfe9061760576"
+            ]
+        ]
+    },
+    {
+        "id": "ce7d66028badeb51",
+        "type": "ui_switch",
+        "z": "8ee3441aaee226d7",
+        "name": "",
+        "label": "Sensor decon",
+        "tooltip": "",
+        "group": "ea8638b4c00b17c5",
+        "order": 8,
+        "width": 3,
+        "height": 1,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "decon_ambient_sensor",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 2350,
+        "y": 340,
+        "wires": [
+            [
+                "2bde9e4efe6f75a0"
+            ]
+        ]
+    },
+    {
+        "id": "307cbe62bf1b21f3",
+        "type": "change",
+        "z": "8ee3441aaee226d7",
+        "name": "get decon_ambient_sensor",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.decon_ambient_sensor",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 340,
+        "wires": [
+            [
+                "17426e33532eb96f"
+            ]
+        ]
+    },
+    {
+        "id": "17426e33532eb96f",
+        "type": "rbe",
+        "z": "8ee3441aaee226d7",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload",
+        "topi": "topic",
+        "x": 710,
+        "y": 340,
+        "wires": [
+            [
+                "ce7d66028badeb51"
+            ]
+        ]
+    },
+    {
+        "id": "2b6db32fd1b2f791",
+        "type": "comment",
+        "z": "8ee3441aaee226d7",
+        "name": "Update Setpoint if set e.g. by other publisher",
+        "info": "",
+        "x": 2030,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "403ce56dee80157d",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "5",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "ea8638b4c00b17c5",
+        "type": "ui_group",
+        "name": "N2 Temperature control",
+        "tab": "bdf7a1de899b21bb",
+        "order": 7,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "bdf7a1de899b21bb",
+        "type": "ui_tab",
+        "name": "MEW Machine Control",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
